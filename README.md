@@ -1,0 +1,2 @@
+Projekt rozwiązujący Team Orienteering Problem (TOP) - problem optymalizacji kombinatorycznej, który polega na znalezieniu trasy, która maksymalizuje sumę punktów zdobytych przez odwiedzenie określonych miejsc, przy jednoczesnym ograniczeniu czasu lub odległości. Projekt ten został zrealizowany w cpp przy pomocy solvera CPLEX.
+Jakub Bielski, Filip Fijałkowski
