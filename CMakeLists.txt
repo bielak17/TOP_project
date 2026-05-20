@@ -44,7 +44,7 @@ foreach (ELEMENT IN LISTS CPLEX_LIB)
     message("include: ${ELEMENT}")
 endforeach ()
  
-add_executable(TOP_project ${SOURCE_FILES})
+add_executable(TOP_project ${SOURCE_FILES} "load_data.cpp")
 #set_property(TARGET blendCPLEX PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     target_link_options(TOP_project PRIVATE "/NODEFAULTLIB:MSVCRT")
