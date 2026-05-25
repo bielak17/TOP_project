@@ -39,7 +39,7 @@ int main()
 			}
 		}
 		// Testowe wypisanie wczytanych danych
-		/*
+		
 		cout << "Dane: " << endl;
 		cout << "Number of vertexes: " << nb_vertexes << endl;
 		cout << "Number of vehicles: " << nb_vehicles << endl;
@@ -50,8 +50,8 @@ int main()
 		cout << "Odleglosc między wierzcholkami 0 i 1 (sqrt(2)): " << distance_matrix[0][1] << endl;
 		cout << "Start vertex: (" << data.points[start_vertex].x << ", " << data.points[start_vertex].y << "), weight: " << weights[start_vertex] << endl;
 		cout << "End vertex: (" << data.points[end_vertex].x << ", " << data.points[end_vertex].y << "), weight: " << weights[end_vertex] << endl;
-		system("pause");
-		*/
+		//system("pause");
+		
 		/// RESTRICTED MASTER PROBLEM (RMP) ///
 
 		IloModel masterModel(env);
