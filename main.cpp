@@ -1,8 +1,9 @@
-﻿#include <ilcplex/ilocplex.h>
+#include <ilcplex/ilocplex.h>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <chrono>
+#include <thread>
 
 #include "load_data.h"
 
@@ -22,8 +23,8 @@ int main()
 	const IloInt Tmax = data.Tmax;
 	const Point* points = data.points;
 	const IloInt start_vertex = 0;
-	const IloInt end_vertex = nb_vertexes-1;
-    IloEnv env;
+	const IloInt end_vertex = nb_vertexes - 1;
+	IloEnv env;
 
 	try {
 		// Główne dane problemu
@@ -39,7 +40,7 @@ int main()
 			}
 		}
 		// Testowe wypisanie wczytanych danych
-		
+
 		cout << "Dane: " << endl;
 		cout << "Number of vertexes: " << nb_vertexes << endl;
 		cout << "Number of vehicles: " << nb_vehicles << endl;
@@ -51,7 +52,7 @@ int main()
 		cout << "Start vertex: (" << data.points[start_vertex].x << ", " << data.points[start_vertex].y << "), weight: " << weights[start_vertex] << endl;
 		cout << "End vertex: (" << data.points[end_vertex].x << ", " << data.points[end_vertex].y << "), weight: " << weights[end_vertex] << endl;
 		//system("pause");
-		
+
 		/// RESTRICTED MASTER PROBLEM (RMP) ///
 
 		IloModel masterModel(env);
@@ -92,7 +93,7 @@ int main()
 		IloNumColumn init_col = routes_count_const(1);
 		route.add(IloNumVar(init_col, 0.0, IloInfinity, ILOFLOAT));
 		init_col.end();
-		generated_routes.push_back({(int)start_vertex, (int)end_vertex}); // Zapisanie trywialnej drogi w pamięci
+		generated_routes.push_back({ (int)start_vertex, (int)end_vertex }); // Zapisanie trywialnej drogi w pamięci
 
 		IloCplex masterCplex(masterModel);
 		// Nie wypisywanie niepotrzebnych logów podczas rozwiązywania problemu
@@ -212,7 +213,8 @@ int main()
 			for (int i = 0; i < nb_vertexes; i++) {
 				if (i == start_vertex || i == end_vertex) {
 					pi[i] = 0.0;
-				} else {
+				}
+				else {
 					pi[i] = masterCplex.getDual(vertex_visited_const[i]);
 				}
 			}
@@ -251,7 +253,7 @@ int main()
 
 			for (int i = 0; i < nb_vertexes; i++) {
 				if (i != start_vertex && i != end_vertex) {
-					if (pricingCplex.getValue(a[i]) > 0.5) { 
+					if (pricingCplex.getValue(a[i]) > 0.5) {
 						new_col += vertex_visited_const[i](1);
 					}
 				}
@@ -311,12 +313,13 @@ int main()
 			cout << " No solution found" << endl;
 		}
 	}
-    catch (IloException& ex) {
-        cerr << "Error: " << ex << endl;
-    }
-    catch (...) {
-        cerr << "Error" << endl;
-    }
-    env.end();
-    return 0;
+	catch (IloException& ex) {
+		cerr << "Error: " << ex << endl;
+	}
+	catch (...) {
+		cerr << "Error" << endl;
+	}
+	env.end();
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000000));
+	return 0;
 }
